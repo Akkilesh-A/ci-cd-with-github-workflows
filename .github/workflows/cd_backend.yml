@@ -30,4 +30,4 @@ jobs:
           mkdir -p /home/runner/.ssh
           ls /home/runner/.ssh
           chmod 700 /home/runner/ssh_key
-          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@139.59.71.37 -t "docker stop user_backend && docker run --name user_backend -e DATABASE_URL=${{ secrets.DATABASE_URL }} -d -p 8000:8000 spacecentre/ci-cd-deployments-testing-http-backend:${{ github.sha }}"
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@139.59.71.37 -t "docker stop user_backend && docker rm user_backend && docker run --name user_backend -e DATABASE_URL=${{ secrets.DATABASE_URL }} -d -p 8000:8000 spacecentre/ci-cd-deployments-testing-http-backend:${{ github.sha }}"
