@@ -1,0 +1,27 @@
+name: Building and Deplying Backend
+run-name: ${{ github.actor }} is building and deploying backend
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the code"
+        uses: actions/checkout@v2
+
+      - name: "Docker Login"
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: "Build and push"
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./docker/Dockerfile.backend
+          push: true
+          tags: spacecentre/ci-cd-deployments:${{ github.sha }}
+    
+    ## Steps to deploy to a vm, an autoscaling group, kubernetes, anything!
