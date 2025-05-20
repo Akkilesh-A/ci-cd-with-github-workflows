@@ -22,6 +22,6 @@ jobs:
           context: .
           file: ./docker/Dockerfile.backend
           push: true
-          tags: spacecentre/ci-cd-deployments:${{ github.sha }}
+          tags: spacecentre/ci-cd-deployments-testing:${{ github.sha }}
     
     ## Steps to deploy to a vm, an autoscaling group, kubernetes, anything!
