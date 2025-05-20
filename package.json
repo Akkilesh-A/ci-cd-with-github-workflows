@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "simple-user-app",
   "private": true,
   "scripts": {
     "build": "turbo run build",
