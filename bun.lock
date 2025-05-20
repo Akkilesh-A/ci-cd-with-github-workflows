@@ -28,6 +28,7 @@
       "name": "web",
       "version": "0.1.0",
       "dependencies": {
+        "@repo/db": "*",
         "@repo/ui": "*",
         "next": "^15.3.0",
         "react": "^19.1.0",
