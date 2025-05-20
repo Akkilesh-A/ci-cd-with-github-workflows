@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./docker/Dockerfile.backend
+          file: ./docker/Dockerfile.http-backend
           push: true
           tags: spacecentre/ci-cd-deployments-testing:${{ github.sha }}
     
