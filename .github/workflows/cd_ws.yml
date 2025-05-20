@@ -1,5 +1,5 @@
-name: Building and Deplying Backend
-run-name: ${{ github.actor }} is building and deploying backend
+name: Building and Deplying Websocket Server
+run-name: ${{ github.actor }} is building and deploying websocket server
 on:
   push:
     branches: [main]
@@ -20,8 +20,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./docker/Dockerfile.http-backend
+          file: ./docker/Dockerfile.websocket
           push: true
-          tags: spacecentre/ci-cd-deployments-testing-http-backend:${{ github.sha }}
+          tags: spacecentre/ci-cd-deployments-testing-websocket:${{ github.sha }}
 
     ## Steps to deploy to a vm, an autoscaling group, kubernetes, anything!
