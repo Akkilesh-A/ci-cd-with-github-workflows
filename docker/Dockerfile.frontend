@@ -22,6 +22,6 @@ RUN printenv DATABASE_URL
 RUN bun run db:generate
 RUN DATABASE_URL=${DATABASE_URL} bun run build
 
-EXPOSE 8000
+EXPOSE 3000
 
 CMD [ "bun", "run", "start:web" ]

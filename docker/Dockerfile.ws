@@ -15,6 +15,6 @@ COPY . .
 RUN bun install
 RUN bun run db:generate
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD [ "bun", "run", "start:websocket" ]
