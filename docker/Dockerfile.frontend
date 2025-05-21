@@ -4,7 +4,7 @@ RUN apt-get update -y && apt-get install -y openssl
 
 WORKDIR /usr/src/app
 ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
+ENV DATABASE_URL=$DATABASE_URL
 
 COPY ./packages ./packages
 COPY ./bun.lock ./bun.lock
@@ -17,8 +17,10 @@ COPY ./apps/web ./apps/web
 COPY . .
 
 RUN bun install
+RUN export DATABASE_URL=${DATABASE_URL}
+RUN printenv DATABASE_URL
 RUN bun run db:generate
-RUN DATABASE_URL=$DATABASE_URL bun run build
+RUN DATABASE_URL=${DATABASE_URL} bun run build
 
 EXPOSE 8000
 
