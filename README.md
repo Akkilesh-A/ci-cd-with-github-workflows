@@ -71,8 +71,6 @@ Ensure the following **GitHub Secrets** are set:
 - `DATABASE_URL`
 - `SSH_PRIVATE_KEY`
 
----
-
 ## ☁️ Deployment
 
 1. **Create a VM** on DigitalOcean and set up Docker.
@@ -82,8 +80,6 @@ Ensure the following **GitHub Secrets** are set:
    - VM is accessed via SSH
    - Old container is removed
    - New container is run from the updated image
-
----
 
 ## ✅ Summary
 
