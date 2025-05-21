@@ -1,84 +1,95 @@
-# Turborepo starter
+# 🚀 CI/CD for Monorepo with Docker & GitHub Workflows
 
-This Turborepo starter is maintained by the Turborepo core team.
+This project demonstrates a complete CI/CD pipeline setup using a **Turborepo** that includes a frontend, an HTTP backend, and a WebSocket server — all containerized with Docker and deployed to a **DigitalOcean VM** using **GitHub Actions**.
 
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
-
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## 📁 Project Structure
 
 ```
-cd my-turborepo
-pnpm build
+.
+├── apps/
+│   ├── web/              # Next.js frontend
+│   ├── http-backend/     # HTTP backend using Bun
+│   └── websocket/        # WebSocket server using Bun
+│
+├── packages/
+│   └── db/               # Shared Prisma setup
+│
+├── docker/
+│   ├── Dockerfile.frontend
+│   ├── Dockerfile.http-backend
+│   └── Dockerfile.ws
+│
+├── .github/
+│   └── workflows/
+│       ├── web.yml
+│       ├── http-backend.yml
+│       └── websocket.yml
+│
+├── package.json          # Root script commands
+└── ...
 ```
 
-### Develop
+## 🧩 Features
 
-To develop all apps and packages, run the following command:
+- **Monorepo** managed by Turborepo
+- **Three apps**: Next.js frontend, Bun HTTP backend, Bun WebSocket server
+- Shared **Prisma** setup for all apps via the `db` package
+- Each app is fully **Dockerized**
+- **CI/CD** pipelines for all apps via GitHub Actions
+- **Automated deployment** to a DigitalOcean VM
 
-```
-cd my-turborepo
-pnpm dev
-```
+## ⚙️ Development
 
-### Remote Caching
+Each app contains its own `dev` and `start` scripts.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+The root `package.json` manages monorepo-wide scripts:
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## 🐳 Docker Setup
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+Dockerfiles are located inside the `docker/` directory:
 
-```
-cd my-turborepo
-npx turbo login
-```
+- `Dockerfile.frontend` → apps/web
+- `Dockerfile.http-backend` → apps/http-backend
+- `Dockerfile.ws` → apps/websocket
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Each GitHub workflow builds and pushes its respective image to **DockerHub** using these Dockerfiles.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## 🔁 GitHub Workflows
 
-```
-npx turbo link
-```
+CI/CD is automated with GitHub Actions. Each app has a separate workflow:
 
-## Useful Links
+- Build Docker image
+- Push to DockerHub using a **Personal Access Token**
+- SSH into the VM
+- Stop and remove existing container
+- Pull and run the new image
 
-Learn more about the power of Turborepo:
+Ensure the following **GitHub Secrets** are set:
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- `DOCKERHUB_USERNAME`
+- `DOCKERHUB_TOKEN`
+- `DATABASE_URL`
+- `SSH_PRIVATE_KEY`
+
+---
+
+## ☁️ Deployment
+
+1. **Create a VM** on DigitalOcean and set up Docker.
+2. **Add SSH key** and DockerHub token to GitHub Secrets.
+3. On push to the respective app's branch:
+   - Docker image is built and pushed
+   - VM is accessed via SSH
+   - Old container is removed
+   - New container is run from the updated image
+
+---
+
+## ✅ Summary
+
+- ✅ Turborepo for mono-repo management
+- ✅ Bun + Prisma for backend performance
+- ✅ Docker for containerization
+- ✅ GitHub Actions for CI/CD
+- ✅ DigitalOcean for deployment
+- ✅ Secure secret management via GitHub Secrets
