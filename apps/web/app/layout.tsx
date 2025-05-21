@@ -20,7 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className}`}>{children}</body>
+      <body
+        style={{ backgroundColor: "#f3f4f6" }}
+        className={`${montserrat.className}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

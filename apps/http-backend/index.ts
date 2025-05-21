@@ -39,6 +39,13 @@ app.post("/user", (req, res) => {
     });
 });
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "If you're seeing this, ci-cd is working, yay! 🎉",
+    status: "success",
+  });
+});
+
 app.listen(8000, () => {
   console.log("Server is running on port 8000");
 });
