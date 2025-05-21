@@ -24,4 +24,10 @@ jobs:
           push: true
           tags: spacecentre/ci-cd-deployments-testing-websocket:${{ github.sha }}
 
-    ## Steps to deploy to a vm, an autoscaling group, kubernetes, anything!
+      - name: "Deploy to the VM"
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" &> ~/ssh_key
+          mkdir -p /home/runner/.ssh
+          ls /home/runner/.ssh
+          chmod 700 /home/runner/ssh_key
+          ssh -o StrictHostKeyChecking=no -i ~/ssh_key root@139.59.71.37 -t "docker stop user_ws && docker rm user_ws && docker run --name user_ws -e DATABASE_URL=${{ secrets.DATABASE_URL }} -d -p 8080:8080 spacecentre/ci-cd-deployments-testing-websocket:${{ github.sha }}"
